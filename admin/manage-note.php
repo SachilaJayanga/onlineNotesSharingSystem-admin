@@ -5,9 +5,7 @@ include('partials/navbar.php');
 ?>
 
 <?php
-
-
-// Display status messages
+ 
 if (isset($_SESSION['message'])) {
     echo $_SESSION['message'];
     unset($_SESSION['message']);
@@ -77,7 +75,7 @@ if (isset($_SESSION['message'])) {
                         $res = mysqli_query($conn, $sql);
 
                         if ($res && mysqli_num_rows($res) > 0) {
-                            $sn = 1; // Serial Number
+                            $sn = 1; 
                             while ($row = mysqli_fetch_assoc($res)) {
                                 $note_id = $row['note_id'];
                                 $title = $row['title'];
@@ -92,16 +90,13 @@ if (isset($_SESSION['message'])) {
                                     
                                     <td>
                                         <?php  
-                                            //CHeck whether we have image or not
-                                            if($image_name=="")
+                                             if($image_name=="")
                                             {
-                                                //WE do not have image, DIslpay Error Message
-                                                echo "<div class='error'>Image not Added.</div>";
+                                                 echo "<div class='error'>Image not Added.</div>";
                                             }
                                             else
                                             {
-                                                //WE Have Image, Display Image
-                                                ?>
+                                                 ?>
                                                 <img src="../images/icon/<?php echo $image_name; ?>" width="100px">
                                                 <?php
                                             }
@@ -120,8 +115,7 @@ if (isset($_SESSION['message'])) {
                         }
                         else
                         {
-                            //Added in Database
-                            echo "<tr> <td colspan='7' class='error'> Notes not Added Yet. </td> </tr>";
+                             echo "<tr> <td colspan='7' class='error'> Notes not Added Yet. </td> </tr>";
                         }
 
                     ?>
