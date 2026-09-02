@@ -3,14 +3,12 @@ ob_start();
 session_start(); 
 include_once('partials/navbar.php'); 
 
-// Check if the user is logged in
-if (!isset($_SESSION['id'])) {
+ if (!isset($_SESSION['id'])) {
     echo "<script type='text/javascript'> document.location ='../login.php'; </script>";
     exit;
 }
 
-// Display status messages
-if (isset($_SESSION['message'])) {
+ if (isset($_SESSION['message'])) {
     echo $_SESSION['message'];
     unset($_SESSION['message']);
 }
@@ -22,8 +20,7 @@ if (isset($_SESSION['message'])) {
         <hr><br><br>
         
         <?php 
-            // Display various session messages
-            if (isset($_SESSION['update'])) {
+             if (isset($_SESSION['update'])) {
                 echo $_SESSION['update'];
                 unset($_SESSION['update']);
             }
@@ -40,8 +37,7 @@ if (isset($_SESSION['message'])) {
                 unset($_SESSION['user-not-found']);
             }
 
-            // Fetch user data for display and editing
-            $id = $_SESSION['id'];
+             $id = $_SESSION['id'];
             $sql = "SELECT * FROM tbl_accounts WHERE id=$id";
             $res = mysqli_query($conn, $sql);
 
@@ -55,8 +51,7 @@ if (isset($_SESSION['message'])) {
                 header('location:myprofile.php');
             }
         ?>
-        <!-- Profile edit form -->
-                        <?php 
+                         <?php 
                         if ($image_profile == "") {
                             echo "<img src='../images/default.png' alt='notes' class='img-curve' width='50px'>";
                         } else {
@@ -79,8 +74,7 @@ if (isset($_SESSION['message'])) {
         <hr>
         <br><br>
 
-                <!-- Button to Add Admin -->
-                <a href="add-note.php" class="btn btn-primary">Upload New</a>
+                 <a href="add-note.php" class="btn btn-primary">Upload New</a>
 
                 <br><br><br>
 
@@ -143,7 +137,7 @@ if (isset($_SESSION['message'])) {
                         $res = mysqli_query($conn, $sql);
 
                         if ($res && mysqli_num_rows($res) > 0) {
-                            $sn = 1; // Serial Number
+                            $sn = 1;  
                             while ($row = mysqli_fetch_assoc($res)) {
                                 $note_id = $row['note_id'];
                                 $title = $row['title'];
@@ -158,16 +152,13 @@ if (isset($_SESSION['message'])) {
                                     
                                     <td>
                                         <?php  
-                                            //CHeck whether we have image or not
-                                            if($image_name=="")
+                                             if($image_name=="")
                                             {
-                                                //WE do not have image, DIslpay Error Message
-                                                echo "<div class='error'>Image not Added.</div>";
+                                                 echo "<div class='error'>Image not Added.</div>";
                                             }
                                             else
                                             {
-                                                //WE Have Image, Display Image
-                                                ?>
+                                                 ?>
                                                 <img src="../images/icon/<?php echo $image_name; ?>" width="100px">
                                                 <?php
                                             }
@@ -175,16 +166,13 @@ if (isset($_SESSION['message'])) {
                                     </td>
                                     <td>
                                         <?php  
-                                            //CHeck whether we have image or not
-                                            if($doc_name=="")
+                                             if($doc_name=="")
                                             {
-                                                //WE do not have image, DIslpay Error Message
-                                                echo "<div class='error'>Document not Added.</div>";
+                                                 echo "<div class='error'>Document not Added.</div>";
                                             }
                                             else
                                             {
-                                                //WE Have Image, Display Image
-                                                ?>
+                                                 ?>
                                                 <a href="../documents/<?php echo $doc_name; ?>" >View Document</a>
                                                 <?php
                                             }
@@ -203,8 +191,7 @@ if (isset($_SESSION['message'])) {
                         }
                         else
                         {
-                            //Added in Database
-                            echo "<tr> <td colspan='7' class='error'> Notes not Added Yet. </td> </tr>";
+                             echo "<tr> <td colspan='7' class='error'> Notes not Added Yet. </td> </tr>";
                         }
 
                     ?>
