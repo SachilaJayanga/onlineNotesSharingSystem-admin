@@ -10,12 +10,12 @@
 <?php
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-    // Retrieve and sanitize inputs
+    
     $title = mysqli_real_escape_string($conn, $_POST['title']);
     $description = mysqli_real_escape_string($conn, $_POST['description']);
     $subject = $_POST['subject'];
     $active = isset($_POST['active']) ? 'Yes' : 'No';
-    $account_id = $_SESSION['id']; // Assuming user is logged in and user ID is stored in session
+    $account_id = $_SESSION['id'];  
 
      
     $image_name = '';
@@ -30,21 +30,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                     $active = "No"; 
                 }
 
-    // Image upload handling
+    
     if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != "") {
         $image_name = $_FILES['image']['name'];
 
-        // Auto rename image to avoid duplication
+       
         $ext = pathinfo($image_name, PATHINFO_EXTENSION);
-        $image_name = "Note-Img-".rand(0000, 9999).".".$ext; // e.g., Note-Img-9348.jpg
+        $image_name = "Note-Img-".rand(0000, 9999).".".$ext;  
 
         $source_path = $_FILES['image']['tmp_name'];
         $destination_path = "../images/icon/".$image_name;
 
-        // Upload the image
+        
         $upload = move_uploaded_file($source_path, $destination_path);
 
-        // Check if image is uploaded
+        
         if ($upload == false) {
             $_SESSION['message'] = "<div class='error'>Failed to upload image.</div>";
             header('location:add-note.php');
@@ -52,29 +52,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         }
     }
 
-    // Document upload handling
+    
     if (isset($_FILES['doc']['name']) && $_FILES['doc']['name'] != "") {
         $document_name = $_FILES['doc']['name'];
-
-        // Auto rename document to avoid duplication
+ 
         $ext = pathinfo($document_name, PATHINFO_EXTENSION);
-        $document_name = "Note-Doc-".rand(0000, 9999).".".$ext; // e.g., Note-Doc-9348.pdf
+        $document_name = "Note-Doc-".rand(0000, 9999).".".$ext; 
 
         $source_path = $_FILES['doc']['tmp_name'];
         $destination_path = "../documents/".$document_name;
-
-        // Upload the document
+ 
         $upload = move_uploaded_file($source_path, $destination_path);
-
-        // Check if document is uploaded
+ 
         if ($upload == false) {
             $_SESSION['message'] = "<div class='error'>Failed to upload document.</div>";
             header('location:add-note.php');
             exit();
         }
     }
-
-    // Insert note into the database
+ 
     $sql = "INSERT INTO tbl_notes SET
         title='$title',
         description='$description',
@@ -85,10 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         account_id='$account_id'
     ";
 
-    // Execute the query
+ 
     $res = mysqli_query($conn, $sql);
 
-    // Check if the query was successful
+ 
     if ($res == true) {
         $_SESSION['message'] = "<div class='success'>Note added successfully.</div>";
         header('location:myprofile.php');
@@ -145,20 +141,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                  
                                 
                                 $sql = "SELECT * FROM tbl_subjects WHERE active='Yes'";
-                                
-                                //Executing query
+ 
                                 $res = mysqli_query($conn, $sql);
-
-                                //Count Rows to check whether we have categories or not
+ 
                                 $count = mysqli_num_rows($res);
-
-                                //IF count is greater than zero, we have categories else we donot have categories
+ 
                                 if($count>0)
                                 {
-                                    //WE have categories
+ 
                                     while($row=mysqli_fetch_assoc($res))
                                     {
-                                        //get the details of categories
+ 
                                         $id = $row['id'];
                                         $title = $row['title'];
 
@@ -171,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                 }
                                 else
                                 {
-                                    //WE do not have category
+ 
                                     ?>
                                     <option value="0">No Subject Found</option>
                                     <?php
