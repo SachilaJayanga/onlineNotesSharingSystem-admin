@@ -6,8 +6,7 @@ include('partials/navbar.php');
 
 ?>
 
-<!-- sEARCH Section Starts Here -->
-<section class="search text-center">
+ <section class="search text-center">
     <div class="container">
         
         <form action="search.php" method="POST">
@@ -17,12 +16,10 @@ include('partials/navbar.php');
 
     </div>
 </section>
-<!-- sEARCH Section Ends Here -->
+ 
 
 
-
-<!-- MEnu Section Starts Here -->
-<section class="menu">
+ <section class="menu">
     <div class="container">
         <h2 class="text-center">Notes</h2>
         <hr>
@@ -31,17 +28,15 @@ include('partials/navbar.php');
             $id = $_SESSION['id'];
              
             $sql = "SELECT * FROM tbl_notes WHERE active='Yes' ORDER BY likes DESC";
-
-            
+ 
             $res=mysqli_query($conn, $sql);
-
-             
+ 
             $count = mysqli_num_rows($res);
 
             
             if($count>0)
             {
-               
+ 
                 while($row=mysqli_fetch_assoc($res))
                 {
                     
@@ -87,8 +82,7 @@ include('partials/navbar.php');
                             <button id="like-button-<?php echo $note_id; ?>" class="btn btn-like" onclick="toggleLike(<?php echo $note_id; ?>)">
 
                             <?php
-                            // Check if user already liked this note
-                            $account_id = $_SESSION['id'];
+                             $account_id = $_SESSION['id'];
                             $check_like_sql = "SELECT * FROM tbl_likes WHERE account_id = $account_id AND note_id = $note_id";
                             $check_like_res = mysqli_query($conn, $check_like_sql);
                             if (mysqli_num_rows($check_like_res) > 0) {
@@ -123,6 +117,5 @@ include('partials/navbar.php');
 </section>
 
 <br><br>
-<!-- Menu Section Ends Here -->
-
+ 
 <?php include('partials/footer.php'); ?>
