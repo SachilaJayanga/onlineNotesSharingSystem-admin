@@ -14,8 +14,8 @@ include('partials/navbar.php');
                 <?php 
                     if(isset($_SESSION['add']))
                     {
-                        echo $_SESSION['add']; //Displaying Session Message
-                        unset($_SESSION['add']); //REmoving Session Message
+                        echo $_SESSION['add']; 
+                        unset($_SESSION['add']);  
                     }
 
                     if(isset($_SESSION['delete']))
@@ -72,16 +72,14 @@ include('partials/navbar.php');
                         $sql = "SELECT * FROM tbl_accounts";
                         
                         $res = mysqli_query($conn, $sql);
-
-                        //CHeck whether the Query is Executed of Not
+ 
                         if($res==TRUE)
                         {
                             
                             $count = mysqli_num_rows($res);  
 
                             $sn=1;  
-
-                            //CHeck the num of rows
+ 
                             if($count>0)
                             {
                                 
@@ -116,7 +114,7 @@ include('partials/navbar.php');
                             }
                             else
                             {
-                                //We Do not Have Data in Database
+                                 echo "No data found!";
                             }
                         }
 
