@@ -60,8 +60,7 @@ if (!isset($_SESSION['id'])) {
         ?>
         <br><br>
 
-                <!-- Button to Add Admin -->
-                <a href="add-subject.php" class="btn btn-primary">Add Subject</a>
+                 <a href="add-subject.php" class="btn btn-primary">Add Subject</a>
 
                 <br /><br /><br />
 
@@ -77,23 +76,16 @@ if (!isset($_SESSION['id'])) {
 
                     <?php 
 
-                        //Query to Get all CAtegories from Database
-                        $sql = "SELECT * FROM tbl_subjects";
+                         $sql = "SELECT * FROM tbl_subjects";
 
-                        //Execute Query
-                        $res = mysqli_query($conn, $sql);
+                         $res = mysqli_query($conn, $sql);
 
-                        //Count Rows
-                        $count = mysqli_num_rows($res);
+                         $count = mysqli_num_rows($res);
 
-                        //Create Serial Number Variable and assign value as 1
-                        $sn=1;
+                         $sn=1;
 
-                        //Check whether we have data in database or not
-                        if($count>0)
-                        {
-                            //We have data in database
-                            //get the data and display
+                         if($count>0)
+                        { 
                             while($row=mysqli_fetch_assoc($res))
                             {
                                 $id = $row['id'];
@@ -110,11 +102,9 @@ if (!isset($_SESSION['id'])) {
                                         <td>
 
                                             <?php  
-                                                //Chcek whether image name is available or not
-                                                if($image_name!="")
+                                                 if($image_name!="")
                                                 {
-                                                    //Display the Image
-                                                    ?>
+                                                     ?>
                                                     
                                                     <img src="../images/category/<?php echo $image_name; ?>" width="100px" >
                                                     
@@ -122,8 +112,7 @@ if (!isset($_SESSION['id'])) {
                                                 }
                                                 else
                                                 {
-                                                    //DIsplay the MEssage
-                                                    echo "<div class='error'>Image not Added.</div>";
+                                                     echo "<div class='error'>Image not Added.</div>";
                                                 }
                                             ?>
 
@@ -143,9 +132,7 @@ if (!isset($_SESSION['id'])) {
                         }
                         else
                         {
-                            //WE do not have data
-                            //We'll display the message inside table
-                            ?>
+                              ?>
 
                             <tr>
                                 <td colspan="6"><div class="error">No Subject Added.</div></td>
