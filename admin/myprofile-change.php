@@ -3,14 +3,12 @@ ob_start();
 session_start(); 
 include_once('partials/navbar.php'); 
 
-// Check if the user is logged in
-if (!isset($_SESSION['id'])) {
+ if (!isset($_SESSION['id'])) {
     echo "<script type='text/javascript'> document.location ='../login.php'; </script>";
     exit;
 }
 
-// Display status messages
-if (isset($_SESSION['message'])) {
+ if (isset($_SESSION['message'])) {
     echo $_SESSION['message'];
     unset($_SESSION['message']);
 }
@@ -22,8 +20,7 @@ if (isset($_SESSION['message'])) {
         <hr><br><br>
         
         <?php 
-            // Display various session messages
-            if (isset($_SESSION['update'])) {
+             if (isset($_SESSION['update'])) {
                 echo $_SESSION['update'];
                 unset($_SESSION['update']);
             }
@@ -40,8 +37,7 @@ if (isset($_SESSION['message'])) {
                 unset($_SESSION['user-not-found']);
             }
 
-            // Fetch user data for display and editing
-            $id = $_SESSION['id'];
+             $id = $_SESSION['id'];
             $sql = "SELECT * FROM tbl_accounts WHERE id=$id";
             $res = mysqli_query($conn, $sql);
 
@@ -57,8 +53,7 @@ if (isset($_SESSION['message'])) {
         ?>
 
     <div class="profile-container">        
-        <!-- Profile edit form -->
-        <form action="update_profile.php" method="POST" enctype="multipart/form-data" class="profile-form">
+         <form action="update_profile.php" method="POST" enctype="multipart/form-data" class="profile-form">
             <table class="tbl-30">
                 <tr>
                     <td></td>
@@ -102,8 +97,7 @@ if (isset($_SESSION['message'])) {
                 </tr>
             </table>
         </form> <br><br>
-        <!-- Change Password Form -->
-        <form action="change_password.php" method="POST" class="password-form">
+         <form action="change_password.php" method="POST" class="password-form">
             <h3>Change Password</h3>
             <table class="tbl-30">
                 <tr>
