@@ -80,11 +80,10 @@ include('partials/navbar.php');
     if(isset($_POST['submit']))
     {
         
-
-        //1. Get the Data from form
+ 
         $full_name = $_POST['full_name'];
         $username = $_POST['username'];
-        $password = md5($_POST['password']); //Password Encryption with MD5
+        $password = md5($_POST['password']);  
         $email = $_POST['email'];
         $role = $_POST['role'];
         
@@ -96,25 +95,21 @@ include('partials/navbar.php');
             role='$role'
         ";
  
-        //3. Executing Query and Saving Data into Datbase
         $res = mysqli_query($conn, $sql) or die();
-
-        //4. Check whether the (Query is Executed) data is inserted or not and display appropriate message
+ 
         if($res==TRUE)
         {
-             
-            //Create a Session Variable to Display Message
+ 
             $_SESSION['add'] = "<div class='success'>Admin Added Successfully.</div>";
-            //Redirect Page to Manage Admin
+  
             header("location:manage-user.php");
             ob_end_flush();
         }
         else
         {
-            
-            //Create a Session Variable to Display Message
+ 
             $_SESSION['add'] = "<div class='error'>Failed to Add Admin.</div>";
-            //Redirect Page to Add Admin
+ 
             header("location:manage-user.php");
         }
 
