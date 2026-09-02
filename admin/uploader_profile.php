@@ -7,11 +7,9 @@ include('partials/navbar.php');
 <div class="main-content text-center ">
     <div class="wrapper ">
 <?php
-// Get the uploader ID (assumed to be passed via URL as ?uploader_id)
-$uploader_id = $_GET['uploader_id'];
+ $uploader_id = $_GET['uploader_id'];
 
-// Fetch uploader details
-$sql = "SELECT * FROM tbl_accounts WHERE id = $uploader_id";
+ $sql = "SELECT * FROM tbl_accounts WHERE id = $uploader_id";
 $uploader_res = mysqli_query($conn, $sql);
 
 if ($uploader_res && mysqli_num_rows($uploader_res) == 1) {
@@ -20,7 +18,7 @@ if ($uploader_res && mysqli_num_rows($uploader_res) == 1) {
     $profile_image = $uploader['image_profile'];
 } else {
     echo "<p>Uploader not found.</p>";
-    exit; // Stop execution if uploader is not found
+    exit; 
 }
 if ($profile_image == "") {
     echo "<img src='../images/default.png' alt='notes' class='img-curve' width='50px'>";
@@ -36,25 +34,16 @@ if ($profile_image == "") {
     <div class="container">
         <h2 class="text-center"><?php echo $uploader_name; ?>'s Documents</h2>
             <hr>
-        <?php 
-        
-         
-        //SQL Query
+        <?php  
         $sql2 = "SELECT * FROM tbl_notes WHERE account_id = $uploader_id";
-
-        //Execute the Query
-        $res2 = mysqli_query($conn, $sql2);
-
-        //Count Rows
-        $count2 = mysqli_num_rows($res2);
-
-        //CHeck whether food available or not
+ 
+        $res2 = mysqli_query($conn, $sql2); 
+        $count2 = mysqli_num_rows($res2); 
         if($count2>0)
         {
              
             while($row=mysqli_fetch_assoc($res2))
-            {
-                //Get all the values
+            { 
                 $note_id = $row['note_id']; 
                 $title = $row['title'];
                 $image_name = $row['image_name'];
@@ -65,16 +54,13 @@ if ($profile_image == "") {
                 <div class="float-container menu-box">
                     <div class="menu-img">
                     <a href="note_page.php?note_id=<?php echo $note_id; ?>" class="btn-primary">
-                        <?php 
-                            //Check whether image available or not
+                        <?php  
                             if($image_name=="")
-                            {
-                                //Image not Available
+                            { 
                                 echo "<img src='../images/default.png' alt='notes' class='img-responsive img-curve' width='50px'>";
                             }
                             else
-                            {
-                                //Image Available
+                            { 
                                 ?>
                                 <img src="../images/icon/<?php echo $image_name; ?>" alt="image" class="img-responsive img-curve">
                                 <?php
@@ -90,8 +76,7 @@ if ($profile_image == "") {
                             <button id="like-button-<?php echo $note_id; ?>" class="btn btn-like" onclick="toggleLike(<?php echo $note_id; ?>)">
 
                             <?php
-                            // Check if user already liked this note
-                            $account_id = $_SESSION['id'];
+                             $account_id = $_SESSION['id'];
                             $check_like_sql = "SELECT * FROM tbl_likes WHERE account_id = $account_id AND note_id = $note_id";
                             $check_like_res = mysqli_query($conn, $check_like_sql);
                             if (mysqli_num_rows($check_like_res) > 0) {
@@ -116,8 +101,7 @@ if ($profile_image == "") {
         }
         else
         {
-            // Not Available 
-            echo "<div class='error'>Food not available.</div>";
+             echo "<div class='error'>Food not available.</div>";
         }
         
         ?>
