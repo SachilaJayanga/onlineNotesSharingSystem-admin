@@ -7,21 +7,13 @@ include('partials/navbar.php');
 
 <?php 
 if (isset($_GET['note_id'])) {
-    $note_id = (int)$_GET['note_id']; // Cast to integer for security
-
-    // SQL Query to Get the Selected Note
+    $note_id = (int)$_GET['note_id'];   
     $sql2 = "SELECT * FROM tbl_notes WHERE note_id = $note_id";
-    // Execute the Query
-    $res2 = mysqli_query($conn, $sql2);
-
-    // Check whether the query executed or not
+     $res2 = mysqli_query($conn, $sql2); 
     if ($res2 == true) {
-        // Check whether data is available or not
-        $count = mysqli_num_rows($res2);
-        // Check if we have note data
-        if ($count == 1) {
-            // Get the Note Details
-            $row2 = mysqli_fetch_assoc($res2);
+         $count = mysqli_num_rows($res2);
+         if ($count == 1) {
+             $row2 = mysqli_fetch_assoc($res2);
             $title = $row2['title'];
             $description = $row2['description'];
             $current_image = $row2['image_name'];
@@ -29,15 +21,13 @@ if (isset($_GET['note_id'])) {
             $current_subject = $row2['subject_id'];
             $active = $row2['active'];
         } else {
-            // Redirect to Manage Notes with Session Message
-            $_SESSION['no-note-found'] = "<div class='error'>Note not found.</div>";
+             $_SESSION['no-note-found'] = "<div class='error'>Note not found.</div>";
             header('location:manage-mynote.php');
             exit();
         }
     }
 } else {
-    // Redirect to Manage Notes if `id` is not set
-    header('location:manage-mynote.php');
+     header('location:manage-mynote.php');
     exit();
 }
 ?>
@@ -68,11 +58,9 @@ if (isset($_GET['note_id'])) {
                     <td>
                         <?php 
                         if ($current_image != "") {
-                            // Image Available
-                            echo "<img src='../images/icon/$current_image' width='150px'>";
+                             echo "<img src='../images/icon/$current_image' width='150px'>";
                         } else {
-                            // Image Not Available
-                            echo "<div class='error'>Image not available.</div>";
+                             echo "<div class='error'>Image not available.</div>";
                         }
                         ?>
                     </td>
@@ -90,11 +78,9 @@ if (isset($_GET['note_id'])) {
                     <td>
                         <?php 
                         if ($current_doc != "") {
-                            // Document Available
-                            echo "<a href='../documents/$current_doc' target='_blank'>View Current Document</a>";
+                             echo "<a href='../documents/$current_doc' target='_blank'>View Current Document</a>";
                         } else {
-                            // Document Not Available
-                            echo "<div class='error'>Document not available.</div>";
+                             echo "<div class='error'>Document not available.</div>";
                         }
                         ?>
                     </td>
@@ -112,17 +98,12 @@ if (isset($_GET['note_id'])) {
                     <td>
                         <select class="dropdown" name="subject">
                             <?php 
-                            // Query to Get Active Categories
-                            $sql = "SELECT * FROM tbl_subjects WHERE active='Yes'";
-                            // Execute the Query
-                            $res = mysqli_query($conn, $sql);
-                            // Count Rows
-                            $count = mysqli_num_rows($res);
+                             $sql = "SELECT * FROM tbl_subjects WHERE active='Yes'";
+                             $res = mysqli_query($conn, $sql);
+                             $count = mysqli_num_rows($res);
 
-                            // Check whether category available or not
-                            if ($count > 0) {
-                                // Category Available
-                                while ($row = mysqli_fetch_assoc($res)) {
+                             if ($count > 0) {
+                                 while ($row = mysqli_fetch_assoc($res)) {
                                     $subject_title = $row['title'];
                                     $subject_id = $row['id'];
                                     ?>
@@ -130,8 +111,7 @@ if (isset($_GET['note_id'])) {
                                     <?php
                                 }
                             } else {
-                                // Category Not Available
-                                echo "<option value='0'>Category Not Available.</option>";
+                                 echo "<option value='0'>Category Not Available.</option>";
                             }
                             ?>
                         </select>
@@ -159,8 +139,7 @@ if (isset($_GET['note_id'])) {
 
         <?php 
         if (isset($_POST['submit'])) {
-            // Get all the details from the form
-            $note_id = $_POST['note_id'];
+             $note_id = $_POST['note_id'];
             $title = $_POST['title'];
             $description = $_POST['description'];
             $current_image = $_POST['current_image'];
@@ -168,60 +147,49 @@ if (isset($_GET['note_id'])) {
             $subject = $_POST['subject'];
             $active = $_POST['active'];
 
-            // Handling image upload
-            if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != "") {
-                // Image file details
-                $image_name = $_FILES['image']['name'];
+             if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != "") {
+                 $image_name = $_FILES['image']['name'];
                 $ext = pathinfo($image_name, PATHINFO_EXTENSION);
                 $image_name = "Note-Image-" . rand(0000, 9999) . ".$ext";
                 $image_temp_path = $_FILES['image']['tmp_name'];
                 $image_dest_path = "../images/icon/" . $image_name;
 
-                // Upload the image
-                $upload = move_uploaded_file($image_temp_path, $image_dest_path);
+                 $upload = move_uploaded_file($image_temp_path, $image_dest_path);
 
-                // Check if upload was successful
-                if ($upload == false) {
+                 if ($upload == false) {
                     $_SESSION['upload'] = "<div class='error'>Failed to upload new image.</div>";
                     header('location:myprofile.php');
                     exit();
                 }
 
-                // Remove the old image if it exists
-                if ($current_image != "" && file_exists("../images/icon/" . $current_image)) {
+                 if ($current_image != "" && file_exists("../images/icon/" . $current_image)) {
                     unlink("../images/icon/" . $current_image);
                 }
             } else {
                 $image_name = $current_image;
             }
 
-            // Handling document upload
-            if (isset($_FILES['doc']['name']) && $_FILES['doc']['name'] != "") {
-                // Document file details
-                $doc_name = $_FILES['doc']['name'];
+             if (isset($_FILES['doc']['name']) && $_FILES['doc']['name'] != "") {
+                 $doc_name = $_FILES['doc']['name'];
                 $doc_temp_path = $_FILES['doc']['tmp_name'];
                 $doc_dest_path = "../documents/" . $doc_name;
 
-                // Upload the document
-                $upload = move_uploaded_file($doc_temp_path, $doc_dest_path);
+                 $upload = move_uploaded_file($doc_temp_path, $doc_dest_path);
 
-                // Check if upload was successful
-                if ($upload == false) {
+                 if ($upload == false) {
                     $_SESSION['upload'] = "<div class='error'>Failed to upload new document.</div>";
                     header('location:myprofile.php');
                     exit();
                 }
 
-                // Remove the old document if it exists
-                if ($current_doc != "" && file_exists("../documents/" . $current_doc)) {
+                 if ($current_doc != "" && file_exists("../documents/" . $current_doc)) {
                     unlink("../documents/" . $current_doc);
                 }
             } else {
                 $doc_name = $current_doc;
             }
 
-            // Update the Note in Database
-            $sql3 = "UPDATE tbl_notes SET 
+             $sql3 = "UPDATE tbl_notes SET 
                 title = '$title',
                 description = '$description',
                 image_name = '$image_name',
@@ -230,18 +198,15 @@ if (isset($_GET['note_id'])) {
                 active = '$active'
                 WHERE note_id=$note_id";
 
-            // Execute the SQL Query
-            $res3 = mysqli_query($conn, $sql3);
+             $res3 = mysqli_query($conn, $sql3);
 
-            // Check whether the query is executed or not 
-            if ($res3 == true) {
+             if ($res3 == true) {
                 $_SESSION['update'] = "<div class='success'>Note updated successfully.</div>";
             } else {
                 $_SESSION['update'] = "<div class='error'>Failed to update note.</div>";
             }
 
-            // Redirect to Manage Notes
-            header('location:myprofile.php');
+             header('location:myprofile.php');
             
             ob_end_flush();
         }
