@@ -48,14 +48,11 @@ if ($result && $result->num_rows > 0) {
 
 <br><br>
 
-        <!-- Main Content Section Starts -->
-        <div class="main-content">
+         <div class="main-content">
             <div class="wrapper">
             
                 <h4>Admin Dashboard  </h4>
-
-                
-                
+ 
                 <br><br>
 
             <div class="float-container">      
@@ -126,8 +123,7 @@ if ($result && $result->num_rows > 0) {
         
     </div>
 </section>
-<!-- search Section Ends Here -->
-
+ 
 <?php 
     if(isset($_SESSION['order']))
     {
@@ -154,28 +150,21 @@ if ($result && $result->num_rows > 0) {
                     $id = $row['id'];
                     $title = $row['title'];
                     $image_name = $row['image_name'];
-                    ?>
-                    
-                    <!-- Updated Link to Category-Notes Page -->
-                        
+                    ?> 
                         <div class="btn box-3 float-container">
                             <a href="category.php?subject_id=<?php echo $id; ?>">
                             <?php 
                                 if ($image_name == "") {
-                                    // Display Message if Image not Available
-                                    echo "<img src='../images/default.png' alt='notes' class='img-responsive img-curve' width='50px'>";
+                                     echo "<img src='../images/default.png' alt='notes' class='img-responsive img-curve' width='50px'>";
                                 } else {
-                                    // Image Available
-                                    ?>
+                                     ?>
                                     <img src="../images/category/<?php echo $image_name; ?>" alt="<?php echo $title; ?>" class="img-responsive img-curve">
                                     <?php
                                 }
                             ?>
                             <h3 class="float-text text-white"><?php echo $title; ?></h3>
                             </a>
-                        </div>
-                   
-
+                        </div> 
                     <?php
                 }
             } else {
@@ -186,10 +175,8 @@ if ($result && $result->num_rows > 0) {
         <div class="clearfix"></div>
     </div>
 </section>
-<!-- Categories Section Ends Here -->
-
-<!-- Trending Section Starts Here -->
-<section class="menu">
+ 
+ <section class="menu">
     <div class="container">
         <h2 class="text-center">Trending</h2>
             <hr>
