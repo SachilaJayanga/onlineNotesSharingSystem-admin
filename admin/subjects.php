@@ -12,20 +12,15 @@ include_once('partials/navbar.php');
         <br>
         
         <?php 
-            //Create SQL Query to Display CAtegories from Database
-            $sql = "SELECT * FROM tbl_subjects WHERE active='Yes'";
-            //Execute the Query
-            $res = mysqli_query($conn, $sql);
-            //Count rows to check whether the category is available or not
-            $count = mysqli_num_rows($res);
+             $sql = "SELECT * FROM tbl_subjects WHERE active='Yes'";
+             $res = mysqli_query($conn, $sql);
+             $count = mysqli_num_rows($res);
 
             if($count>0)
             {
-                //Categories Available
-                while($row=mysqli_fetch_assoc($res))
+                 while($row=mysqli_fetch_assoc($res))
                 {
-                    //Get the Values like id, title, image_name
-                    $id = $row['id'];
+                     $id = $row['id'];
                     $title = $row['title'];
                     $image_name = $row['image_name'];
                     ?>
@@ -34,16 +29,13 @@ include_once('partials/navbar.php');
                         
                         <div class="box-3 float-container">
                             <?php 
-                                //Check whether Image is available or not
-                                if($image_name=="")
+                                 if($image_name=="")
                                 {
-                                    //Display MEssage
-                                    echo "<div class='error'>Image not Available</div>";
+                                     echo "<div class='error'>Image not Available</div>";
                                 }
                                 else
                                 {
-                                    //Image Available
-                                    ?>
+                                     ?>
                                     <img src="../images/category/<?php echo $image_name; ?>" alt="search-bg" class="img-responsive img-curve">
                                     <?php
                                 }
@@ -59,8 +51,7 @@ include_once('partials/navbar.php');
             }
             else
             {
-                //Categories not Available
-                echo "<div class='error'>Category not Added.</div>";
+                 echo "<div class='error'>Category not Added.</div>";
             }
         ?>
 
@@ -68,8 +59,7 @@ include_once('partials/navbar.php');
         <div class="clearfix"></div>
     </div>
 </section>
-<!-- Categories Section Ends Here -->
-</body>
+ </body>
 
 
 
