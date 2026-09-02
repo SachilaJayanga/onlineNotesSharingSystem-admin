@@ -7,35 +7,22 @@
         <br><br>
 
         <?php 
-            //1. Get the ID of Selected Admin
-            $id=$_GET['id'];
-
-            //2. Create SQL Query to Get the Details
-            $sql="SELECT * FROM admin WHERE id=$id";
-
-            //Execute the Query
-            $res=mysqli_query($conn, $sql);
-
-            //Check whether the query is executed or not
+             $id=$_GET['id']; 
+             $sql="SELECT * FROM admin WHERE id=$id"; 
+            $res=mysqli_query($conn, $sql); 
             if($res==true)
             {
-                // Check whether the data is available or not
-                $count = mysqli_num_rows($res);
-                //Check whether we have admin data or not
-                if($count==1)
+                 $count = mysqli_num_rows($res);
+                 if($count==1)
                 {
-                    // Get the Details
-                    //echo "Admin Available";
-                    $row=mysqli_fetch_assoc($res);
-
+                    $row=mysqli_fetch_assoc($res); 
                     $full_name = $row['full_name'];
                     $email = $row['email'];
                     $username = $row['username'];
                 }
                 else
                 {
-                    //Redirect to Manage Admin PAge
-                    header('location:manage-admin.php');
+                     header('location:manage-admin.php');
                 }
             }
         
@@ -81,41 +68,31 @@
 
 <?php 
 
-    //Check whether the Submit Button is Clicked or not
-    if(isset($_POST['submit']))
+     if(isset($_POST['submit']))
     {
-        //echo "Button CLicked";
-        //Get all the values from form to update
-        $id = $_POST['id'];
+         $id = $_POST['id'];
         $full_name = $_POST['full_name'];
         $email = $_POST['email'];
         $username = $_POST['username'];
 
-        //Create a SQL Query to Update Admin
-        $sql = "UPDATE admin SET
+         $sql = "UPDATE admin SET
         full_name = '$full_name',
         email = '$email',
         username = '$username' 
         WHERE id='$id'
         ";
 
-        //Execute the Query
-        $res = mysqli_query($conn, $sql);
+         $res = mysqli_query($conn, $sql);
 
-        //Check whether the query executed successfully or not
-        if($res==true)
+         if($res==true)
         {
-            //Query Executed and Admin Updated
-            $_SESSION['update'] = "<div class='success'>Admin Updated Successfully.</div>";
-            //Redirect to Manage Admin Page
-            header('location:manage-admin.php');
+             $_SESSION['update'] = "<div class='success'>Admin Updated Successfully.</div>";
+             header('location:manage-admin.php');
         }
         else
         {
-            //Failed to Update Admin
-            $_SESSION['update'] = "<div class='error'>Failed to Delete Admin.</div>";
-            //Redirect to Manage Admin Page
-            header('location:manage-admin.php');
+             $_SESSION['update'] = "<div class='error'>Failed to Delete Admin.</div>";
+             header('location:manage-admin.php');
         }
     }
 
